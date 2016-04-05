@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd                                                                                                         
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Spring Security annotations Enabled -->
+	<security:global-method-security secured-annotations="enabled" pre-post-annotations="enabled" />
+
+	<!-- Disable security on static resources -->
+	<security:http pattern="/css/**" security="none" />
+	<security:http pattern="/images/**" security="none" />
+	<security:http pattern="/fonts/**" security="none" />
+	<security:http pattern="/js/**" security="none" />
+
+	<!-- Disable security on error resources -->
+	<security:http pattern="/error/**" security="none" />
+
+	<!-- enable use-expressions -->
+	<security:http auto-config="true" use-expressions="true" disable-url-rewriting="true" access-denied-page="${page.accessdeny}">
+
+		<security:intercept-url pattern="/login" access="permitAll" />
+		<security:intercept-url pattern="/j_spring_security_check" access="permitAll" />
+
+		<!-- Enable security to all paths under app context request (query part 
+			is not consider in filter decision), paths with security level in none wont 
+			be filtered -->
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+
+		<!-- Configuring login -->
+		<security:form-login login-page="/login" default-target-url="/" authentication-failure-handler-ref="simpleUrlAuthenticationFailureHandler" />
+
+		<!-- Invalidating session and deleting session cookie -->
+		<security:logout logout-success-url="${logout.url}" delete-cookies="true" invalidate-session="true" />
+		
+	</security:http>
+
+	<!-- Configuring FailureHandler to redirect to access deny page -->
+	<bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<constructor-arg name="defaultFailureUrl" value="${logout.url.forbidden}" />
+	</bean>
+
+	<!-- Select users and user_roles from database -->
+	<security:authentication-manager>
+			<!-- 		<security:authentication-provider> -->
+			<!-- 			<security:user-service>  -->
+			<!-- 				<security:user name="jahv" password="admin" authorities="ROLE_ADMIN" />  -->
+			<!-- 			</security:user-service> -->
+			
+			<!-- ###### -->
+			
+			<!-- 			<security:jdbc-user-service -->
+			<!-- 				data-source-ref="dataSource" -->
+			<!-- 				users-by-username-query="select username, password, active from users where username=?" -->
+			<!-- 				authorities-by-username-query="select us.username, ur.authority from users us, user_roles ur where us.user_id = ur.user_id and us.username =?  " /> -->
+			
+			<!-- 		</security:authentication-provider> -->
+			<security:authentication-provider ref="customAuthenticationProvider" />
+	</security:authentication-manager>
+
+</beans>

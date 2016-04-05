@@ -1,0 +1,33 @@
+/* GENERALS */
+html, body{ height: 100%; }
+body { font-size: 1.2em; }
+
+.margin-bottom-0 { margin-bottom: 0px !important; }
+
+.font-size-1em { font-size: 1em !important; }
+
+/* HEADER */
+.width-50 { width: 50px !important;}
+nav.break-line:after { content: ''; height:10px; background-color:rgb(107, 83, 71); width: 100%; }
+div.navbar-header a.navbar-brand { padding-top: 0; padding-bottom: 0; height: auto; }
+div.navbar-header h1 { font-size: 1.9em; }
+div#colibri-navbar-collapse ul { margin-top: 0px; }
+
+/* MENU */
+.caret-right { border-bottom: 4px solid transparent; border-top: 4px solid transparent;
+	border-left: 4px solid; margin-top:4px; float:right; display: inline-block;
+	height: 0; opacity: 0.3; vertical-align: top; width: 0;
+}
+.sub-menu:hover > ul.dropdown-menu {display: block; }
+.sub-menu ul { right: auto; left: 100%; top: -8px; }
+
+/* FOOTER */
+footer#pricing_footer { z-index: 99; position: absolute; left: 0;
+	bottom: 0px; height: 40px; padding: 10px 15px 0 0; text-align: right;
+	border-top:2px solid rgb(238,238,238); background-color:rgb(248,248,248); color: #AAA;
+}
+
+/* MAIN CONTENT */
+div#appColibri_content { color: #000; position: relative; min-height: 85%;
+	height: auto !important; padding-top: 15px; padding-bottom: 50px;
+}

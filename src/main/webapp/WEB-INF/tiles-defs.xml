@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+	<!-- BASE DEFINITION -->
+	<definition name="base.definition" template="/WEB-INF/tiles/layout.jsp">
+		<put-attribute name="icon" value="/images/colibri.png" />
+		<put-attribute name="header" value="/WEB-INF/tiles/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/footer.jsp" />
+		
+		<!-- // ** BASE JS LIBRARIES -->
+		<put-attribute name="jquery" value="/js/jquery-1.11.3.min.js" />
+		<put-attribute name="bootstrapt" value="/js/bootstrap-3.3.5.min.js" />
+		<put-attribute name="angular" value="/js/angular-1.4.7.min.js" />
+		<put-attribute name="angularui" value="/js/angular-ui-bootstrap-0.14.3.min.js" />
+		
+		<!-- // ** BASE CSS -->
+		<put-list-attribute name="styles">
+			<add-attribute value="/css/bootstrap.min.css" type="string" />
+			<add-attribute value="/css/appColibri.css" type="string" />
+		</put-list-attribute>
+		
+		<!-- // ** LIST OF SCRIPTS -->
+		<put-list-attribute name="scripts">
+			<add-attribute value="/js/main.js" type="string"/>
+		</put-list-attribute>
+	</definition>
+	
+	<!-- ONCE USER IS LOGGEDIN -->
+	<definition name="base.definition.loged" extends="base.definition">
+		<put-attribute name="menu" value="/WEB-INF/tiles/menu.jsp" />
+	</definition>
+	
+	<!-- DASHBOARD -->
+	<definition name="dashboard" extends="base.definition.loged">
+		<put-attribute name="title" value="Inicio" cascade="true" />
+        <put-attribute name="body" value="/WEB-INF/jsp/dashboard.jsp" />
+	</definition>
+	
+	<!-- BANCO IMAGENES / IMAGENES PARA FACEBOOK -->
+	<definition name="imgFB" extends="base.definition.loged">
+		<put-attribute name="title" value="Imágenes Facebook" cascade="true" />
+        <put-attribute name="body" value="/WEB-INF/jsp/bancoImagenes/imgFB.jsp" />
+        
+        <put-list-attribute name="styles" inherit="true">
+			<add-attribute value="/css/jquery/pgwSlideShow-2.0.min.css" type="string"/>
+		</put-list-attribute>
+		
+		<put-list-attribute name="scripts" inherit="true">
+			<add-attribute value="/js/jquery/pgwSlideShow-2.0.min.js" type="string"/>
+		</put-list-attribute>
+	</definition>
+	
+</tiles-definitions>
